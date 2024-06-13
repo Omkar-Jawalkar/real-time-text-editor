@@ -13,14 +13,12 @@ const io = new Server(server, {
     },
 });
 
-
 let port = 8080;
 
 app.use(cors());
 app.use(homeRoutes);
 
 io.on("connection", (socket) => {
-    console.log("User is connected ");
     socket.on("disconnect", () => {
         console.log("user disconnected");
     });
