@@ -19,6 +19,19 @@ app.use(cors());
 app.use(homeRoutes);
 
 io.on("connection", (socket) => {
+    socket.on("join-room", (roomId, cb) => {
+        socket.join(roomId);
+        socket
+            .to(roomId)
+            .emit("room-messages", `${socket.id} Joined ` + roomId);
+        cb(`You Joined`);
+    });
+
+    socket.on("send-message", (roomId, message, cb) => {
+        socket.to(roomId).emit("room-messages", `${socket.id} - ${message}`);
+        cb(`You - ${message}`);
+    });
+
     socket.on("disconnect", () => {
         console.log("user disconnected");
     });
