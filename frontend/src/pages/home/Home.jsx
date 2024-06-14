@@ -46,10 +46,6 @@ const Home = () => {
             setRoomMessages((prev) => [...prev, message]);
         });
 
-        // socket.on("room-messages", (message) => {
-        //     console.log(message);
-        // });
-
         return () => {
             socket.off("connect", onConnect);
         };
