@@ -2,11 +2,16 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import homeRoutes from "./src/routes/home.routes.js";
-import cors from "cors";
+import bodyParser from "body-parser";
 
 const app = express();
 const server = createServer(app);
 
+//Local Data base
+
+let roomData = {}; // roomId : [users]
+
+// IO server
 const io = new Server(server, {
     cors: {
         origin: "*",
@@ -15,17 +20,37 @@ const io = new Server(server, {
 
 let port = 8080;
 
+// Middlewares
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(homeRoutes);
 
-// let  roomData = {}; // roomId : [users]
+const createRoomInLocalDatabase = (roomId, username, socketId) => {
+    let room = roomData[roomId];
+    if (room) {
+        room.push({ socketId: socketId, username: username });
+    } else {
+        roomData[roomId] = [{ socketId: socketId, username: username }];
+        console.log(roomData, "joined");
+    }
+};
 
+app.get("/users", (req, res) => {
+    const { roomId } = req.body;
+    let users = roomData[roomId] || [];
+    res.send({
+        data: { users: users },
+        error: false,
+        message: "",
+    });
+});
+
+// IO Config
 io.on("connection", (socket) => {
-    console.log("user connected", socket.id);
-
     socket.on("join-room", (roomIdAndUsername, cb) => {
         let { roomId, username } = roomIdAndUsername;
         socket.join(roomId);
-        socket.emit("user-status", { roomId: roomId, username: username });
+        createRoomInLocalDatabase(roomId, username, socket.id);
         cb(false, "");
     });
 
