@@ -22,8 +22,11 @@ app.use(homeRoutes);
 io.on("connection", (socket) => {
     console.log("user connected", socket.id);
 
-    socket.on("join-room", (roomId, cb) => {
+    socket.on("join-room", (roomIdAndUsername, cb) => {
+        let { roomId, username } = roomIdAndUsername;
         socket.join(roomId);
+        socket.emit("user-status", { roomId: roomId, username: username });
+        cb(false, "");
     });
 
     socket.on("leave-room", (roomId, cb) => {});
