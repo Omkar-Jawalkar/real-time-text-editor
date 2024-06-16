@@ -9,11 +9,13 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { useEffect } from "react";
+import { socket } from "../../socket";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
     const [roomId, setRoomId] = useState("");
     const [username, setUsername] = useState("");
+    const navigate = useNavigate();
     const toast = useToast();
 
     const invalidUsernameOrRoomIdToast = () =>
@@ -32,7 +34,36 @@ const Home = () => {
         return false;
     };
 
-    const handleJoinRoom = () => {};
+    const handleJoinRoom = () => {
+        if (!socket.connected) {
+            toast({
+                title: "Connection to server lost, Please reload",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+            });
+            return;
+        }
+
+        socket.emit(
+            "join-room",
+            {
+                roomId: roomId,
+                username: username,
+            },
+            ({ error, message }) => {
+                if (error) {
+                    toast({
+                        title: message,
+                        status: "error",
+                        duration: 5000,
+                    });
+                } else {
+                    navigate(`/${roomId}`);
+                }
+            }
+        );
+    };
 
     return (
         <Flex
