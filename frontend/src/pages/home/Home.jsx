@@ -51,7 +51,7 @@ const Home = () => {
                 roomId: roomId,
                 username: username,
             },
-            ({ error, message }) => {
+            (error, message) => {
                 if (error) {
                     toast({
                         title: message,

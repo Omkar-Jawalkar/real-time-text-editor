@@ -47,11 +47,16 @@ app.get("/users", (req, res) => {
 
 // IO Config
 io.on("connection", (socket) => {
-    socket.on("join-room", (roomIdAndUsername, cb) => {
+    socket.on("join-room", async (roomIdAndUsername, cb) => {
         let { roomId, username } = roomIdAndUsername;
-        socket.join(roomId);
-        createRoomInLocalDatabase(roomId, username, socket.id);
-        cb(false, "");
+        try {
+            const joinStatus = await socket.join(roomId);
+            console.log(joinStatus, "joined");
+            createRoomInLocalDatabase(roomId, username, socket.id);
+            cb(false, "Joined the room");
+        } catch (e) {
+            cb(true, "Error Joining Room");
+        }
     });
 
     socket.on("leave-room", (roomId, cb) => {});
