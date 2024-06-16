@@ -28,7 +28,12 @@ const App = () => {
     }, []);
 
     return (
-        <Box minH={"3xl"} position={"relative"}>
+        <Box
+            minH={"xl"}
+            flexDir={"column"}
+            display={"flex"}
+            position={"relative"}
+        >
             <Navbar />
             <RouterProvider router={router} />
             <Footer />
