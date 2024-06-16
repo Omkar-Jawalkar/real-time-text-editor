@@ -15,26 +15,24 @@ const io = new Server(server, {
 
 let port = 8080;
 
-app.use(cors());
 app.use(homeRoutes);
 
+// let  roomData = {}; // roomId : [users]
+
 io.on("connection", (socket) => {
+    console.log("user connected", socket.id);
+
     socket.on("join-room", (roomId, cb) => {
         socket.join(roomId);
-        socket
-            .to(roomId)
-            .emit("room-messages", `${socket.id} Joined ` + roomId);
-        cb(`You Joined`);
     });
 
-    socket.on("send-message", (roomId, message, cb) => {
-        socket.to(roomId).emit("room-messages", `${socket.id} - ${message}`);
-        cb(`You - ${message}`);
-    });
+    socket.on("leave-room", (roomId, cb) => {});
 
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-    });
+    socket.on("user-status", (roomId, statusMessage, cb) => {});
+
+    socket.on("share-editor-content", (roomId, content) => {});
+
+    socket.on("disconnect", () => {});
 });
 
 server.listen(port, () => {
