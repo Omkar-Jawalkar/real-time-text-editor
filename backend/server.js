@@ -53,7 +53,6 @@ io.on("connection", (socket) => {
         let { roomId, username } = roomIdAndUsername;
         try {
             const joinStatus = await socket.join(roomId);
-            console.log(joinStatus, "joined");
             createRoomInLocalDatabase(roomId, username, socket.id);
             cb(false, "Joined the room");
         } catch (e) {
