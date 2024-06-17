@@ -29,7 +29,7 @@ const App = () => {
 
     return (
         <Box
-            minH={"xl"}
+            minH={"4xl"}
             flexDir={"column"}
             display={"flex"}
             position={"relative"}

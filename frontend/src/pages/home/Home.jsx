@@ -78,18 +78,18 @@ const Home = () => {
             minW={"xl"}
         >
             <Heading textAlign={"center"} size={"md"}>
-                Welcome to Shareditor
+                Welcome to <Link color={"purple"}>Shareditor</Link>
             </Heading>
             <Input
                 value={roomId}
                 onChange={(e) => setRoomId(e.target.value)}
-                variant="filled"
+                variant="outline"
                 placeholder="Room Id"
             />
             <Input
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                variant="filled"
+                variant="outline"
                 placeholder="Username"
             />
             <Button
@@ -98,13 +98,13 @@ const Home = () => {
                         handleJoinRoom();
                     }
                 }}
-                variant={"outline"}
+                colorScheme={"purple"}
             >
                 Join
             </Button>
-            <Divider paddingY={2} />
+            <Divider />
             <Text textAlign={"center"}>
-                Dont have a Room Id? <Link color={"teal"}> Create one </Link>{" "}
+                Dont have a Room Id? <Link color={"purple"}> Create one </Link>{" "}
                 and join :)
             </Text>
         </Flex>
