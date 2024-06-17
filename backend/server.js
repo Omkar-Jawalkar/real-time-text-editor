@@ -68,15 +68,13 @@ io.on("connection", (socket) => {
         let roomUsers = roomData[roomId] || [];
         console.log("room users - ", roomUsers);
         try {
-            io.to(roomId).emit("users-joins-or-leaves", {
+            socket.to(roomId).emit("users-joins-or-leaves", {
                 users: roomUsers,
             });
             console.log("emmitted users");
         } catch (error) {
             console.log(error);
         }
-
-        
     });
 
     socket.on("leave-room", (roomId, cb) => {});
