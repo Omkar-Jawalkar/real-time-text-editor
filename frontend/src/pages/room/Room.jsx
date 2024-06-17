@@ -26,9 +26,9 @@ const Room = () => {
     }, []);
 
     return (
-        <Flex minH={"inherit"} bg={"purple"}>
+        <Flex minH={"inherit"}>
             <EditorSection />
-            <UsersSection />
+            <UsersSection users={users} />
         </Flex>
     );
 };

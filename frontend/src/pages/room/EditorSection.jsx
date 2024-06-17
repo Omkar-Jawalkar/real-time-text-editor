@@ -4,7 +4,7 @@ import UploadSaveSection from "./UploadSaveSection";
 
 const EditorSection = () => {
     return (
-        <Flex border={"2px"} flex={3} flexDirection={"column"}>
+        <Flex gap={4} padding={4} flex={3} flexDirection={"column"}>
             <UploadSaveSection />
             <Editor />
         </Flex>
