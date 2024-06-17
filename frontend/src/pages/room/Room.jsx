@@ -1,38 +1,34 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { Flex } from "@chakra-ui/react";
 import EditorSection from "./EditorSection";
 import UsersSection from "./UsersSection";
-import { RecoilRoot } from "recoil";
+
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { socket } from "../../socket";
 
 const Room = () => {
     const { roomId } = useParams();
-    const [users, setUsers] = useState();
-
-    const fetchUsersInRoom = async () => {
-        try {
-            const response = await fetch(`http://localhost:8080/users`, {
-                roomId: roomId,
-            });
-            const data = await response.json();
-            setUsers(data?.users);
-        } catch (error) {
-            console.log(error.message);
-            // todo : show toast error
-        }
-    };
+    // const fetchUsersInRoom = async () => {
+    //     try {
+    //         await fetch(`http://localhost:8080/users`, {
+    //             roomId: roomId,
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //         // todo : show toast error
+    //     }
+    // };
 
     useEffect(() => {
-        fetchUsersInRoom();
+        socket.emit("get-users", roomId);
+        console.log("made event to get data");
     }, []);
 
     return (
-        <RecoilRoot>
-            <Flex minH={"inherit"}>
-                <EditorSection />
-                <UsersSection users={users} />
-            </Flex>
-        </RecoilRoot>
+        <Flex minH={"inherit"}>
+            <EditorSection />
+            <UsersSection />
+        </Flex>
     );
 };
 

@@ -40,6 +40,7 @@ const createRoomInLocalDatabase = (roomId, username, socketId) => {
 app.get("/users", (req, res) => {
     const { roomId } = req.body;
     let users = roomData[roomId] || [];
+
     res.send({
         data: { users: users },
         error: false,
@@ -54,15 +55,31 @@ io.on("connection", (socket) => {
         try {
             const joinStatus = await socket.join(roomId);
             createRoomInLocalDatabase(roomId, username, socket.id);
+            io.to(roomId).emit("users-joins-or-leaves", {
+                users: roomData[roomId],
+            });
             cb(false, "Joined the room");
         } catch (e) {
             cb(true, "Error Joining Room");
         }
     });
 
-    socket.on("leave-room", (roomId, cb) => {});
+    socket.on("get-users", (roomId) => {
+        let roomUsers = roomData[roomId] || [];
+        console.log("room users - ", roomUsers);
+        try {
+            io.to(roomId).emit("users-joins-or-leaves", {
+                users: roomUsers,
+            });
+            console.log("emmitted users");
+        } catch (error) {
+            console.log(error);
+        }
 
-    socket.on("user-status", (roomId, statusMessage, cb) => {});
+        
+    });
+
+    socket.on("leave-room", (roomId, cb) => {});
 
     socket.on("share-editor-content", (roomId, content) => {});
 

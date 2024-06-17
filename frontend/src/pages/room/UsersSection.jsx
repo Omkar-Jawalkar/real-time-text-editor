@@ -6,6 +6,8 @@ import { useRecoilState } from "recoil";
 
 const UsersSection = () => {
     const [users] = useRecoilState(usersState);
+    
+
     return (
         <Flex flexDirection={"column"} flex={2} padding={4}>
             Connected Users :
