@@ -2,6 +2,7 @@ import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import homeRoutes from "./src/routes/home.routes.js";
+import cors from "cors";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -21,6 +22,7 @@ const io = new Server(server, {
 let port = 8080;
 
 // Middlewares
+app.use(cors());
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(homeRoutes);

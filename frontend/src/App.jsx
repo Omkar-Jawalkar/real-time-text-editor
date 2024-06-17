@@ -6,7 +6,7 @@ import { socket } from "../src/socket";
 import Footer from "./components/footer/Footer";
 import { useToast } from "@chakra-ui/react";
 import { Box } from "@chakra-ui/react";
-
+import "./App.css";
 const App = () => {
     const toast = useToast();
 
@@ -29,7 +29,7 @@ const App = () => {
 
     return (
         <Box
-            minH={"4xl"}
+            minH={"100vh"}
             flexDir={"column"}
             display={"flex"}
             position={"relative"}
