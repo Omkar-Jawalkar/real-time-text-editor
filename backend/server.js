@@ -60,8 +60,8 @@ app.get("/users", (req, res) => {
 // IO Config
 io.on("connection", (socket) => {
     socket.on("join-room", async (roomIdAndUsername, cb) => {
-        let { roomId, username } = roomIdAndUsername;
         try {
+            let { roomId, username } = roomIdAndUsername;
             const joinStatus = await socket.join(roomId);
             roomId = String(roomId);
             createRoomInLocalDatabase(roomId, username, socket.id);
@@ -94,9 +94,6 @@ io.on("connection", (socket) => {
 
         // remove the socket from database
         removeSocketFromLocalDatabaseWhileDisconnecting(socket.id, foundRoomId);
-
-        console.log("foundRoomId: " + foundRoomId);
-        console.log("users left in room: " + String(roomData[foundRoomId]));
 
         if (foundRoomId) {
             io.to(foundRoomId).emit("users-joins-or-leaves", {

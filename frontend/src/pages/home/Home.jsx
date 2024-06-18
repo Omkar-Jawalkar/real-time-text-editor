@@ -11,11 +11,14 @@ import {
 import { useState } from "react";
 import { socket } from "../../socket";
 import { useNavigate } from "react-router-dom";
+import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
+import { useRecoilState } from "recoil";
 
 const Home = () => {
     const [roomId, setRoomId] = useState("");
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
+    const [navigating, setNavigating] = useRecoilState(navigatingFromHomeState);
     const toast = useToast();
 
     const invalidUsernameOrRoomIdToast = () =>
@@ -35,6 +38,10 @@ const Home = () => {
     };
 
     const handleJoinRoom = () => {
+        // storing username in localstoreage
+
+        localStorage.setItem("username", username);
+
         if (!socket.connected) {
             toast({
                 title: "Connection to server lost, Please reload",
@@ -59,6 +66,7 @@ const Home = () => {
                         duration: 5000,
                     });
                 } else {
+                    setNavigating(true);
                     navigate(`/${roomId}`);
                 }
             }
