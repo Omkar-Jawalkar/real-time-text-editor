@@ -26,7 +26,6 @@ const App = () => {
         socket.on("connect", connectedToastMessage);
 
         socket.on("users-joins-or-leaves", (usersDataJoinedOrLeft) => {
-            console.log("usersDataJoinedOrLeft - ", usersDataJoinedOrLeft);
             setUsers(usersDataJoinedOrLeft?.users);
         });
 
@@ -34,7 +33,7 @@ const App = () => {
             socket.off("connect", () => {});
             socket.off("users-joins-or-leaves", () => {});
         };
-    }, []);
+    }, [socket]);
 
     return (
         <Box

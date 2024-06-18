@@ -37,6 +37,15 @@ const createRoomInLocalDatabase = (roomId, username, socketId) => {
     }
 };
 
+const removeSocketFromLocalDatabaseWhileDisconnecting = (socketId, roomId) => {
+    let newRoomWithRemovedDisconnectedSocket = roomData[roomId]?.filter(
+        (item) => {
+            return item?.socketId !== socketId;
+        }
+    );
+    if (roomId) roomData[roomId] = newRoomWithRemovedDisconnectedSocket || [];
+};
+
 app.get("/users", (req, res) => {
     const { roomId } = req.body;
     let users = roomData[roomId] || [];
@@ -54,6 +63,7 @@ io.on("connection", (socket) => {
         let { roomId, username } = roomIdAndUsername;
         try {
             const joinStatus = await socket.join(roomId);
+            roomId = String(roomId);
             createRoomInLocalDatabase(roomId, username, socket.id);
             io.to(roomId).emit("users-joins-or-leaves", {
                 users: roomData[roomId],
@@ -64,24 +74,36 @@ io.on("connection", (socket) => {
         }
     });
 
-    socket.on("get-users", (roomId) => {
-        let roomUsers = roomData[roomId] || [];
-        console.log("room users - ", roomUsers);
-        try {
-            io.to(roomId).emit("users-joins-or-leaves", {
-                users: roomUsers,
-            });
-            console.log("emmitted users");
-        } catch (error) {
-            console.log(error);
-        }
-    });
+    socket.on("get-users", (roomId) => {});
 
     socket.on("leave-room", (roomId, cb) => {});
 
     socket.on("share-editor-content", (roomId, content) => {});
 
-    socket.on("disconnect", () => {});
+    socket.on("disconnecting", () => {
+        // convert Set to Array
+        let roomsJoinedBySocket = Array.from(socket.rooms);
+
+        let foundRoomId;
+        // Pick the RoomID from mapping in rooms joined by Socket
+        roomsJoinedBySocket.map((roomId) => {
+            if (roomData[roomId]) {
+                foundRoomId = roomId;
+            }
+        });
+
+        // remove the socket from database
+        removeSocketFromLocalDatabaseWhileDisconnecting(socket.id, foundRoomId);
+
+        console.log("foundRoomId: " + foundRoomId);
+        console.log("users left in room: " + String(roomData[foundRoomId]));
+
+        if (foundRoomId) {
+            io.to(foundRoomId).emit("users-joins-or-leaves", {
+                users: roomData[foundRoomId] || [],
+            });
+        }
+    });
 });
 
 server.listen(port, () => {

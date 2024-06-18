@@ -8,21 +8,11 @@ import { socket } from "../../socket";
 
 const Room = () => {
     const { roomId } = useParams();
-    // const fetchUsersInRoom = async () => {
-    //     try {
-    //         await fetch(`http://localhost:8080/users`, {
-    //             roomId: roomId,
-    //         });
-    //     } catch (error) {
-    //         console.log(error.message);
-    //         // todo : show toast error
-    //     }
-    // };
 
-    useEffect(() => {
-        socket.emit("get-users", roomId);
-        console.log("made event to get data");
-    }, []);
+
+    useEffect(()=>{
+        
+    },[])
 
     return (
         <Flex minH={"inherit"}>
