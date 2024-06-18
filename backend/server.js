@@ -78,7 +78,12 @@ io.on("connection", (socket) => {
 
     socket.on("leave-room", (roomId, cb) => {});
 
-    socket.on("share-editor-content", (roomId, content) => {});
+    socket.on("send-editor-content", (roomId, content) => {
+
+
+        console.log(content);
+        io.to(roomId).emit("receive-editor-content", content);
+    });
 
     socket.on("disconnecting", () => {
         // convert Set to Array
