@@ -11,10 +11,6 @@ const Editor = () => {
     const [editorState, setEditorState] = useRecoilState(EditorContextState);
     const { roomId } = useParams();
 
-    // function formatDelta(delta) {
-    //     return `<div>${JSON.stringify(delta.ops, null, 2)}</div>`;
-    // }
-
     useEffect(() => {
         let delta = editorRef.current.getEditor().getContents();
 
