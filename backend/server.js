@@ -79,10 +79,8 @@ io.on("connection", (socket) => {
     socket.on("leave-room", (roomId, cb) => {});
 
     socket.on("send-editor-content", (roomId, content) => {
-
-
         console.log(content);
-        io.to(roomId).emit("receive-editor-content", content);
+        socket.broadcast.to(roomId).emit("receive-editor-content", content);
     });
 
     socket.on("disconnecting", () => {

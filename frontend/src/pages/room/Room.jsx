@@ -35,8 +35,6 @@ const Room = () => {
             return;
         }
 
-        console.log("roomId", roomId);
-
         socket.emit(
             "join-room",
             {
@@ -56,7 +54,6 @@ const Room = () => {
     };
 
     useEffect(() => {
-        console.log("navigating", navigating);
         if (!navigating) {
             joinRoomAfterRefresh();
         }
