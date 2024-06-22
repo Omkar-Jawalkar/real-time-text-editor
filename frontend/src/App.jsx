@@ -1,4 +1,4 @@
-import { Box, useToast } from "@chakra-ui/react";
+import { Box, useToast, Flex } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -39,12 +39,15 @@ const App = () => {
     return (
         <Box
             minH={"100vh"}
+            width={"full"}
             flexDir={"column"}
             display={"flex"}
             position={"relative"}
         >
             <Navbar />
-            <RouterProvider router={router} />
+            <Flex marginX={"auto"} w="full" minH={"100vh"} maxW={"6xl"}>
+                <RouterProvider router={router} />
+            </Flex>
             <Footer />
         </Box>
     );
