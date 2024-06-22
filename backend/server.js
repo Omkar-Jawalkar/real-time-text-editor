@@ -46,6 +46,15 @@ const removeSocketFromLocalDatabaseWhileDisconnecting = (socketId, roomId) => {
     if (roomId) roomData[roomId] = newRoomWithRemovedDisconnectedSocket || [];
 };
 
+const sendEditorContentToSpecificSocket = (room, socketId) => {
+    let firstSocketId = room[0].socketId;
+
+    io.to(firstSocketId).emit(
+        "make-emit-to-send-editor-content-to-joined-user",
+        socketId
+    );
+};
+
 app.get("/users", (req, res) => {
     const { roomId } = req.body;
     let users = roomData[roomId] || [];
@@ -60,20 +69,10 @@ app.get("/users", (req, res) => {
 app.get("/editor-content", (req, res) => {
     const { roomId, socketId } = req.query;
 
-    console.log(roomId, socketId);
-
     const room = roomData[roomId] || [];
 
     if (room.length > 0) {
-        let firstSocketId = room[0].socketId;
-
-        console.log("firstSocketId", room[0]["socketId"] || undefined);
-
-        io.to(firstSocketId).emit(
-            "make-emit-to-send-editor-content-to-joined-user",
-            socketId
-        );
-
+        sendEditorContentToSpecificSocket(room, socketId);
         res.send({
             data: { isContentComming: true },
             error: false,
@@ -101,17 +100,11 @@ io.on("connection", (socket) => {
             });
 
             if (isRefreshing) {
-                //   todo also send the editor content
                 const room = roomData[roomId] || [];
                 if (room.length > 0) {
-                    let firstSocketId = room[0].socketId;
-                    io.to(firstSocketId).emit(
-                        "make-emit-to-send-editor-content-to-joined-user",
-                        socket.id
-                    );
+                    sendEditorContentToSpecificSocket(room, socket.id);
                 }
             }
-
             cb(false, "Joined the room");
         } catch (e) {
             cb(true, "Error Joining Room");
