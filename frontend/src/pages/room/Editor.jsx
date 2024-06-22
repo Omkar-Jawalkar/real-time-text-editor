@@ -95,6 +95,7 @@ const Editor = () => {
             {loading && <h1>Loading....</h1>}
             <ReactQuill
                 ref={editorRef}
+                placeholder="Share the link to invite collaborators to your document."
                 style={{ height: "100%" }}
                 theme="snow"
                 // onChange={setEditorState}
@@ -104,3 +105,4 @@ const Editor = () => {
 };
 
 export default Editor;
+    
