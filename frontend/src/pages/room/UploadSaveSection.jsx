@@ -1,14 +1,15 @@
 import { Button, Flex, useToast, Code, IconButton } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
+import { useParams } from "react-router-dom";
 
 const UploadSaveSection = () => {
     const toast = useToast();
+    const { roomId } = useParams();
 
     const copySharingLinkToClipboard = () => {
-        let fullURL = window.location.href;
-        navigator.clipboard.writeText(fullURL);
+        navigator.clipboard.writeText(roomId);
         toast({
-            title: `Link copied`,
+            title: `Code copied`,
             position: "top",
             status: "success",
             isClosable: true,
@@ -19,7 +20,7 @@ const UploadSaveSection = () => {
         <Flex py={2} justifyContent={"space-between"} alignItems={"center"}>
             <Flex justifyContent={"center"} alignItems={"center"} gap={4}>
                 <Code colorScheme="purple" fontSize={"lg"}>
-                    Sharing Link
+                    Sharing Code
                 </Code>
                 <IconButton
                     onClick={copySharingLinkToClipboard}
@@ -30,8 +31,12 @@ const UploadSaveSection = () => {
                 ></IconButton>
             </Flex>
             <Flex gap={4}>
-                <Button colorScheme="purple">Upload</Button>
-                <Button colorScheme="purple">Save</Button>
+                <Button size={"sm"} colorScheme="purple">
+                    Upload
+                </Button>
+                <Button size={"sm"} colorScheme="purple">
+                    Save
+                </Button>
             </Flex>
         </Flex>
     );

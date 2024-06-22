@@ -50,7 +50,11 @@ const Room = () => {
     }, [socket]);
 
     if (!username) {
-        navigate("/");
+        navigate("/", {
+            state: {
+                roomId: roomId,
+            },
+        });
         return;
     }
 
