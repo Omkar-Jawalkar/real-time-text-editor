@@ -7,6 +7,7 @@ import {
     Heading,
     Divider,
     useToast,
+    Code,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { socket } from "../../socket";
@@ -89,7 +90,7 @@ const Home = () => {
         <Flex
             margin={"auto"}
             my={"2xl"}
-            padding={4}
+            padding={4} 
             gap={4}
             border={"1px"}
             borderRadius={"md"}
@@ -98,7 +99,10 @@ const Home = () => {
             minW={"xl"}
         >
             <Heading textAlign={"center"} size={"md"}>
-                Welcome to <Link color={"purple"}>Shareditor</Link>
+                Welcome to{" "}
+                <Code fontSize={"lg"} color={"purple"}>
+                    Shareditor
+                </Code>
             </Heading>
             <Input
                 value={roomId}

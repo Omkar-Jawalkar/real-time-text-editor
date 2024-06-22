@@ -31,10 +31,10 @@ const UploadSaveSection = () => {
                 ></IconButton>
             </Flex>
             <Flex gap={4}>
-                <Button size={"sm"} colorScheme="purple">
+                <Button size={"sm"} variant={"outline"} colorScheme="purple">
                     Upload
                 </Button>
-                <Button size={"sm"} colorScheme="purple">
+                <Button size={"sm"} variant={"outline"} colorScheme="purple">
                     Save
                 </Button>
             </Flex>

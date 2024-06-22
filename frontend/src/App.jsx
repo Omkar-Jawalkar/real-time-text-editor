@@ -1,4 +1,4 @@
-import { Box, useToast, Flex } from "@chakra-ui/react";
+import { Box, Flex, useToast } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import { useRecoilState } from "recoil";
@@ -7,7 +7,6 @@ import "./App.css";
 import usersState from "./atom/UsersState";
 import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
-import Delta from "quill-delta";
 import router from "./routes/Routes";
 
 const App = () => {
@@ -38,7 +37,7 @@ const App = () => {
 
     return (
         <Box
-            minH={"100vh"}
+            minH={"min-content"}
             width={"full"}
             flexDir={"column"}
             display={"flex"}

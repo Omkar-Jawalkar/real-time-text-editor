@@ -96,7 +96,7 @@ const Editor = () => {
             <ReactQuill
                 ref={editorRef}
                 placeholder="Share the code to invite collaborators to your document."
-                style={{ height: "100%" }}
+                style={{ height: "70%" }}
                 theme="snow"
                 // onChange={setEditorState}
             />
@@ -105,4 +105,3 @@ const Editor = () => {
 };
 
 export default Editor;
-    

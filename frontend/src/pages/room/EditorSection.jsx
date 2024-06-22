@@ -4,11 +4,11 @@ import UploadSaveSection from "./UploadSaveSection";
 
 const EditorSection = () => {
     return (
-        <Flex gap={4} padding={4} flex={3} flexDirection={"column"}>
+        <Flex gap={4} paddingY={4} flex={5} flexDirection={"column"}>
             <UploadSaveSection />
-            <Editor />
+            <Editor />  
         </Flex>
     );
-};  
+};
 
 export default EditorSection;

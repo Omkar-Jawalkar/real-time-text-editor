@@ -1,4 +1,4 @@
-import { Box, Flex, Spacer, Link, Button, IconButton } from "@chakra-ui/react";
+import { Box, Flex, Link, Code } from "@chakra-ui/react";
 import { ExternalLinkIcon } from "@chakra-ui/icons";
 const Navbar = () => {
     return (
@@ -12,24 +12,39 @@ const Navbar = () => {
             >
                 <Box>
                     <Link href="/" fontWeight="bold" color="white">
-                        Shareditor 🤝
+                        Shareditor 🚀
                     </Link>
                 </Box>
                 <Box>
                     <Link href="/" fontWeight="bold" color="white">
-                        A Real Time Collaborative Text Editor
+                        <Code colorScheme="purple">
+                            ⚡️ A Real Time Collaborative Text Editor ⚡️
+                        </Code>
                     </Link>
                 </Box>
 
-                <Flex justifyContent={"center"} gap={1} alignItems={"center"}>
-                    <Link href="/about" color="white">
+                <Flex
+                    as={"u"}
+                    justifyContent={"center"}
+                    gap={1}
+                    color={"white"}
+                    alignItems={"center"}
+                >
+                    <Link
+                        isExternal
+                        fontWeight={"bold"}
+                        textUnderlineOffset={true}
+                        href="https://github.com/Omkar-Jawalkar/real-time-text-editor"
+                        color="white"
+                    >
                         Github
                     </Link>
                     <Link
+                        isExternal
                         display={"flex"}
                         justifyContent={"center"}
                         alignItems={"center"}
-                        href="/about"
+                        href="https://github.com/Omkar-Jawalkar/real-time-text-editor"
                         color="white"
                     >
                         <ExternalLinkIcon />

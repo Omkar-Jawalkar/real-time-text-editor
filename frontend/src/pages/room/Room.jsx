@@ -59,7 +59,7 @@ const Room = () => {
     }
 
     return (
-        <Flex minH={"inherit"}>
+        <Flex w={"full"} mt={8} gap={6} minH={"inherit"}>
             <EditorSection />
             <UsersSection />
         </Flex>
