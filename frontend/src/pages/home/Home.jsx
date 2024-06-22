@@ -12,6 +12,7 @@ import { useState } from "react";
 import { socket } from "../../socket";
 import { useNavigate } from "react-router-dom";
 import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
+import FetchForNewUserJoinedState from "../../atom/FetchForNewUserJoinedState";
 import { useRecoilState } from "recoil";
 
 const Home = () => {
@@ -19,6 +20,9 @@ const Home = () => {
     const [username, setUsername] = useState("");
     const navigate = useNavigate();
     const [navigating, setNavigating] = useRecoilState(navigatingFromHomeState);
+    const [fetchForNewUserJoinedState, setFetchForNewUserJoinedState] =
+        useRecoilState(FetchForNewUserJoinedState);
+
     const toast = useToast();
 
     const invalidUsernameOrRoomIdToast = () =>
@@ -67,6 +71,7 @@ const Home = () => {
                     });
                 } else {
                     setNavigating(true);
+                    setFetchForNewUserJoinedState(true);
                     navigate(`/${roomId}`);
                 }
             }

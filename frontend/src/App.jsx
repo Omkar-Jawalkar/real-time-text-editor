@@ -10,12 +10,9 @@ import Navbar from "./components/navbar/Navbar";
 import Delta from "quill-delta";
 import router from "./routes/Routes";
 
-import EditorContextState from "./atom/EditorContextState";
-
 const App = () => {
     const toast = useToast();
     const [users, setUsers] = useRecoilState(usersState);
-    const [editorState, useEditorState] = useRecoilState(EditorContextState);
 
     const connectedToastMessage = () => {
         toast({
@@ -32,8 +29,6 @@ const App = () => {
         socket.on("users-joins-or-leaves", (usersDataJoinedOrLeft) => {
             setUsers(usersDataJoinedOrLeft?.users);
         });
-
-
 
         return () => {
             socket.off("connect", () => {});

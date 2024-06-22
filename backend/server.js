@@ -4,6 +4,7 @@ import { Server } from "socket.io";
 import homeRoutes from "./src/routes/home.routes.js";
 import cors from "cors";
 import bodyParser from "body-parser";
+import e from "express";
 
 const app = express();
 const server = createServer(app);
@@ -33,7 +34,6 @@ const createRoomInLocalDatabase = (roomId, username, socketId) => {
         room.push({ socketId: socketId, username: username });
     } else {
         roomData[roomId] = [{ socketId: socketId, username: username }];
-        console.log(roomData, "joined");
     }
 };
 
@@ -57,6 +57,36 @@ app.get("/users", (req, res) => {
     });
 });
 
+app.get("/editor-content", (req, res) => {
+    const { roomId, socketId } = req.query;
+
+    console.log(roomId, socketId);
+
+    const room = roomData[roomId] || [];
+
+    if (room.length > 0 && room.length !== 1) {
+        let firstSocketId = room[0].socketId;
+
+        console.log("firstSocketId", room[0]["socketId"] || undefined);
+
+        io.to(firstSocketId).emit(
+            "make-emit-to-send-editor-content-to-joined-user",
+            socketId
+        );
+        res.send({
+            data: { isContentComming: true },
+            error: false,
+            message: "",
+        });
+    } else {
+        res.send({
+            data: { isContentComming: false },
+            error: false,
+            message: "",
+        });
+    }
+});
+
 // IO Config
 io.on("connection", (socket) => {
     socket.on("join-room", async (roomIdAndUsername, cb) => {
@@ -78,6 +108,17 @@ io.on("connection", (socket) => {
 
     socket.on("leave-room", (roomId, cb) => {});
 
+    socket.on(
+        "send-editor-content-to-joined-user",
+        (roomId, socketIdToEmitWholeEditorContent, wholeEditorContent) => {
+            io.to(socketIdToEmitWholeEditorContent).emit(
+                "recieve-editor-content-to-joined-user",
+                wholeEditorContent
+            );
+        }
+    );
+
+    // changed Content
     socket.on("send-editor-content", (roomId, content) => {
         console.log(content);
         socket.broadcast.to(roomId).emit("receive-editor-content", content);
