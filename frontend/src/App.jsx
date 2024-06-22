@@ -9,6 +9,8 @@ import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/Navbar";
 import router from "./routes/Routes";
 
+// tesing commits
+
 const App = () => {
     const toast = useToast();
     const [users, setUsers] = useRecoilState(usersState);
