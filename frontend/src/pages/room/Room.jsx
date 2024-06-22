@@ -18,17 +18,6 @@ const Room = () => {
     const joinRoomAfterRefresh = () => {
         let username = localStorage.getItem("username");
 
-        // if socked disconnect then redirect to login
-        // if (!socket.connected) {
-        //     toast({
-        //         title: "Connection to server lost, Please reload",
-        //         status: "error",
-        //         duration: 5000,
-        //         isClosable: true,
-        //     });
-        //     return;
-        // }
-
         // if username is not present then redirect to login
         if (!username) {
             navigate("/");
@@ -40,6 +29,7 @@ const Room = () => {
             {
                 roomId: roomId,
                 username: username,
+                isRefreshing: true,
             },
             (isError, message) => {
                 if (isError) {

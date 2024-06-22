@@ -64,7 +64,7 @@ app.get("/editor-content", (req, res) => {
 
     const room = roomData[roomId] || [];
 
-    if (room.length > 0 && room.length !== 1) {
+    if (room.length > 0) {
         let firstSocketId = room[0].socketId;
 
         console.log("firstSocketId", room[0]["socketId"] || undefined);
@@ -73,6 +73,7 @@ app.get("/editor-content", (req, res) => {
             "make-emit-to-send-editor-content-to-joined-user",
             socketId
         );
+
         res.send({
             data: { isContentComming: true },
             error: false,
@@ -91,13 +92,26 @@ app.get("/editor-content", (req, res) => {
 io.on("connection", (socket) => {
     socket.on("join-room", async (roomIdAndUsername, cb) => {
         try {
-            let { roomId, username } = roomIdAndUsername;
+            let { roomId, username, isRefreshing } = roomIdAndUsername;
             const joinStatus = await socket.join(roomId);
             roomId = String(roomId);
             createRoomInLocalDatabase(roomId, username, socket.id);
             io.to(roomId).emit("users-joins-or-leaves", {
                 users: roomData[roomId],
             });
+
+            if (isRefreshing) {
+                //   todo also send the editor content
+                const room = roomData[roomId] || [];
+                if (room.length > 0) {
+                    let firstSocketId = room[0].socketId;
+                    io.to(firstSocketId).emit(
+                        "make-emit-to-send-editor-content-to-joined-user",
+                        socket.id
+                    );
+                }
+            }
+
             cb(false, "Joined the room");
         } catch (e) {
             cb(true, "Error Joining Room");
