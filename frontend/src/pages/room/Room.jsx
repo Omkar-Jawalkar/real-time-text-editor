@@ -56,7 +56,6 @@ const Room = () => {
 
     return (
         <Flex minH={"inherit"}>
-            {"roonm id" + roomId}
             <EditorSection />
             <UsersSection />
         </Flex>

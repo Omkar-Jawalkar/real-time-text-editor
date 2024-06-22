@@ -9,6 +9,6 @@ const EditorSection = () => {
             <Editor />
         </Flex>
     );
-};
+};  
 
 export default EditorSection;

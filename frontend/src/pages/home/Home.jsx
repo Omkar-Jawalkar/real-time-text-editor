@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
 import FetchForNewUserJoinedState from "../../atom/FetchForNewUserJoinedState";
 import { useRecoilState } from "recoil";
+import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
     const [roomId, setRoomId] = useState("");
@@ -78,6 +79,11 @@ const Home = () => {
         );
     };
 
+    const generateRandomRoomId = () => {
+        let randomUniqueId = uuidv4();
+        setRoomId(randomUniqueId);
+    };
+
     return (
         <Flex
             margin={"auto"}
@@ -117,7 +123,11 @@ const Home = () => {
             </Button>
             <Divider />
             <Text textAlign={"center"}>
-                Dont have a Room Id? <Link color={"purple"}> Create one </Link>{" "}
+                Dont have a Room Id?{" "}
+                <Link onClick={generateRandomRoomId} color={"purple"}>
+                    {" "}
+                    Create one{" "}
+                </Link>{" "}
                 and join :)
             </Text>
         </Flex>
