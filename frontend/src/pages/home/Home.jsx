@@ -9,13 +9,15 @@ import {
     useToast,
     Code,
 } from "@chakra-ui/react";
+import { colors } from "../../constants/colors";
 import { useState } from "react";
 import { socket } from "../../socket";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
 import FetchForNewUserJoinedState from "../../atom/FetchForNewUserJoinedState";
 import { useRecoilState } from "recoil";
 import { v4 as uuidv4 } from "uuid";
+import getRandomNumber from "../../constants/random";
 
 const Home = () => {
     const [roomId, setRoomId] = useState("");
@@ -46,8 +48,10 @@ const Home = () => {
 
     const handleJoinRoom = () => {
         // storing username in localstoreage
-
+        let randomValue = getRandomNumber(0, colors.length - 1);
+        let randomColor = colors[randomValue];
         localStorage.setItem("username", username);
+        localStorage.setItem("color", randomColor);
 
         if (!socket.connected) {
             toast({
@@ -64,6 +68,8 @@ const Home = () => {
             {
                 roomId: roomId,
                 username: username,
+                isRefreshing: false,
+                color: randomColor,
             },
             (error, message) => {
                 if (error) {
@@ -78,7 +84,7 @@ const Home = () => {
                     scroll(0, 0);
                     navigate(`/${roomId}`);
                 }
-            }       
+            }
         );
     };
 

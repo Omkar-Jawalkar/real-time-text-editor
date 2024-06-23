@@ -5,6 +5,7 @@ import homeRoutes from "./src/routes/home.routes.js";
 import cors from "cors";
 import bodyParser from "body-parser";
 import e from "express";
+import { error } from "node:console";
 
 const app = express();
 const server = createServer(app);
@@ -28,10 +29,10 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(homeRoutes);
 
-const createRoomInLocalDatabase = (roomId, username, socketId) => {
+const createRoomInLocalDatabase = (roomId, username, color, socketId) => {
     let room = roomData[roomId];
     if (room) {
-        room.push({ socketId: socketId, username: username });
+        room.push({ socketId: socketId, username: username, color: color });
     } else {
         roomData[roomId] = [{ socketId: socketId, username: username }];
     }
@@ -91,10 +92,11 @@ app.get("/editor-content", (req, res) => {
 io.on("connection", (socket) => {
     socket.on("join-room", async (roomIdAndUsername, cb) => {
         try {
-            let { roomId, username, isRefreshing } = roomIdAndUsername;
+            let { roomId, username, isRefreshing, color } = roomIdAndUsername;
             const joinStatus = await socket.join(roomId);
             roomId = String(roomId);
-            createRoomInLocalDatabase(roomId, username, socket.id);
+            createRoomInLocalDatabase(roomId, username, color, socket.id);
+
             io.to(roomId).emit("users-joins-or-leaves", {
                 users: roomData[roomId],
             });
@@ -113,7 +115,25 @@ io.on("connection", (socket) => {
 
     socket.on("get-users", (roomId) => {});
 
-    socket.on("leave-room", (roomId, cb) => {});
+    socket.on("leave-room", (socketId, roomId) => {
+        // get the room using roomId
+
+        try {
+            socket.leave(roomId);
+            let room = roomData[roomId] || [];
+
+            // filter the room where socketId not present
+
+            let newRoom = room.filter(
+                (roomItem) => roomItem?.socketId !== socketId
+            );
+
+            // set newRoom to room
+            roomData[roomId] = newRoom;
+        } catch (error) {
+            console.log(error);
+        }
+    });
 
     socket.on(
         "send-editor-content-to-joined-user",
@@ -126,10 +146,28 @@ io.on("connection", (socket) => {
     );
 
     // changed Content
-    socket.on("send-editor-content", (roomId, content) => {
+    socket.on("send-editor-content", (roomId, content, range) => {
         console.log(content);
-        socket.broadcast.to(roomId).emit("receive-editor-content", content);
+        socket.broadcast
+            .to(roomId)
+            .emit("receive-editor-content", content, range);
     });
+
+    socket.on(
+        "send-cursor-changes",
+        (roomId, socketId, username, color, range) => {
+            console.log("cursor changes", range + " " + socketId);
+            socket.broadcast
+                .to(roomId)
+                .emit(
+                    "recieve-cursor-changes",
+                    socketId,
+                    username,
+                    color,
+                    range
+                );
+        }
+    );
 
     socket.on("disconnecting", () => {
         // convert Set to Array

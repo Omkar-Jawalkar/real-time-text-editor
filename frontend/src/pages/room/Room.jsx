@@ -17,6 +17,7 @@ const Room = () => {
 
     const joinRoomAfterRefresh = () => {
         let username = localStorage.getItem("username");
+        let color = localStorage.getItem("color");
 
         // if username is not present then redirect to login
         if (!username) {
@@ -30,6 +31,7 @@ const Room = () => {
                 roomId: roomId,
                 username: username,
                 isRefreshing: true,
+                color: color,
             },
             (isError, message) => {
                 if (isError) {
@@ -48,7 +50,6 @@ const Room = () => {
             joinRoomAfterRefresh();
         }
     }, [socket]);
-
 
     if (!username) {
         navigate("/", {

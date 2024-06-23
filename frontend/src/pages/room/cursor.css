@@ -1,0 +1,23 @@
+.custom-cursor {
+    position: absolute;
+    pointer-events: none;
+}
+
+.cursor-caret {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background-color: var(--user-color, #000);
+}
+
+.cursor-name {
+    position: absolute;
+    left: 0;
+    top: -20px;
+    background-color: var(--user-color, #000);
+    color: white;
+    font-size: 12px;
+    padding: 2px 4px;
+    border-radius: 3px;
+    white-space: nowrap;
+}
