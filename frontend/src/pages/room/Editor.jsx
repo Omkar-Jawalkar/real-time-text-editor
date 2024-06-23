@@ -7,6 +7,7 @@ import { socket } from "../../socket";
 const Editor = () => {
     const editorRef = useRef("");
     const [loading, setLoading] = useState(true);
+    const { roomId } = useParams();
 
     const fetchEditorContent = async () => {
         try {
@@ -24,24 +25,22 @@ const Editor = () => {
         }
     };
 
+    // useEffect for fetching editor content
     useEffect(() => {
         fetchEditorContent();
     }, []);
 
-    const { roomId } = useParams();
-
+    // useEffect for text-change in editor
     useEffect(() => {
-        // let delta = editorRef.current.getEditor().getContents();
         if (editorRef.current) {
-            editorRef.current
-                .getEditor()
-                .on("text-change", (delta, oldDelta, source) => {
-                    if (source === "user") {
-                        console.log(delta);
-                        // sending just changes
-                        socket.emit("send-editor-content", roomId, delta);
-                    }
-                });
+            let quill = editorRef.current.getEditor();
+            quill.on("text-change", (delta, oldDelta, source) => {
+                if (source === "user") {
+                    console.log(delta);
+                    // sending just changes
+                    socket.emit("send-editor-content", roomId, delta);
+                }
+            });
         }
     }, []);
 

@@ -49,6 +49,7 @@ const Room = () => {
         }
     }, [socket]);
 
+
     if (!username) {
         navigate("/", {
             state: {

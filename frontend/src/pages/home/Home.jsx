@@ -75,9 +75,10 @@ const Home = () => {
                 } else {
                     setNavigating(true);
                     setFetchForNewUserJoinedState(true);
+                    scroll(0, 0);
                     navigate(`/${roomId}`);
                 }
-            }
+            }       
         );
     };
 
@@ -90,7 +91,7 @@ const Home = () => {
         <Flex
             margin={"auto"}
             my={"2xl"}
-            padding={4} 
+            padding={4}
             gap={4}
             border={"1px"}
             borderRadius={"md"}
