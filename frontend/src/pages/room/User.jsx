@@ -4,7 +4,7 @@ import { socket } from "../../socket";
 const User = ({ socketId, username, color }) => {
     return (
         <Flex>
-            <Code fontWeight={"bold"} bg={color}>
+            <Code bg={color}>
                 {username} {socket.id === socketId && "(You)"}{" "}
             </Code>
         </Flex>

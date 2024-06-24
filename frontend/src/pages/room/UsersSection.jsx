@@ -17,7 +17,9 @@ const UsersSection = () => {
 
     return (
         <Flex flexDirection={"column"} gap={2} flex={2} paddingTop={20}>
-            <Text>Collaborators:</Text>
+            <Code fontWeight={"extrabold"} bg={"white"}>
+                Collaborators:
+            </Code>
             {users?.map((user) => (
                 <User key={user?.socketId} {...user} />
             ))}
