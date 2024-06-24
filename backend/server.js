@@ -17,7 +17,7 @@ let roomData = {}; // roomId : [users]
 // IO server
 const io = new Server(server, {
     cors: {
-        origin: "*",
+        origin: ["https://shareditor.vercel.app", "http://localhost:5173"],
     },
 });
 
