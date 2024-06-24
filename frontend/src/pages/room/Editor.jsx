@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { useParams } from "react-router-dom";
+import { AbortedDeferredError, useParams } from "react-router-dom";
 import QuillCursors from "quill-cursors";
 import { Quill } from "react-quill";
 import { socket } from "../../socket";
@@ -45,21 +45,6 @@ const Editor = () => {
         }
     }, []);
 
-    // useEffect(() => {
-    //     if (cursorsRef.current) {
-    //         users.map((user) => {
-    //             if (!hashMapRef.current[user?.socketId]) {
-    //                 cursorsRef.current.createCursor(
-    //                     user?.socketId,
-    //                     user?.username,
-    //                     user?.color
-    //                 );
-    //                 hashMapRef.current[user.socketId] = user;
-    //             }
-    //         });
-    //     }
-    // }, [users]);
-
     // useEffect for fetching editor content
     useEffect(() => {
         fetchEditorContent();
@@ -101,8 +86,6 @@ const Editor = () => {
     }, []);
 
     // recieve-cursor-changes
-
-    // recieve-cursor-changes
     useEffect(() => {
         if (editorRef.current) {
             socket.on(
@@ -112,16 +95,16 @@ const Editor = () => {
 
                     if (!hashMapRef.current[socketId]) {
                         console.log("creating new cursor");
-                        let cursor = cursorsRef.current.createCursor(
+                        cursorsRef.current.createCursor(
                             socketId,
                             username,
                             color
                         );
-                        console.log(cursor);
+
                         cursorsRef.current.toggleFlag(socketId, true);
                         cursorsRef.current.moveCursor(socketId, range);
 
-                        hashMapRef.current[socketId] = cursor;
+                        hashMapRef.current[socketId] = "createdCursor";
                     } else {
                         console.log("updating previous cursor");
                         console.log(cursorsRef.current);
@@ -168,7 +151,32 @@ const Editor = () => {
         }
     }, []);
 
-    // register cursor
+    // todo: testing remaining 
+    useEffect(() => {
+        if (cursorsRef.current) {
+            // if the user present then marking the hashMap[userSocket] to true;
+            // by default hashMap[userSocket]
+            let keyToBeDeleted;
+            Object.keys(hashMapRef.current).forEach((key) => {
+                let isPresent = false;
+                for (let index = 0; index < users.length; index++) {
+                    if (key === users[index]?.socketId) {
+                        isPresent = true;
+                        break;
+                    }
+                }
+
+                if (isPresent === false) {
+                    keyToBeDeleted = key;
+                    return;
+                }
+            });
+            cursorsRef.current.removeCursor(keyToBeDeleted);
+            delete hashMapRef.current[keyToBeDeleted];
+
+            console.log(hashMapRef.current);
+        }
+    }, [users]);
 
     return (
         <>

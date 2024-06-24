@@ -10,7 +10,7 @@ import {
     Code,
 } from "@chakra-ui/react";
 import { colors } from "../../constants/colors";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { socket } from "../../socket";
 import { useNavigate } from "react-router-dom";
 import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
@@ -29,6 +29,15 @@ const Home = () => {
         useRecoilState(FetchForNewUserJoinedState);
 
     const toast = useToast();
+
+    const connectedToastMessage = () => {
+        toast({
+            title: "Connected to the Server",
+            status: "success",
+            duration: 5000,
+            isClosable: true,
+        });
+    };
 
     const invalidUsernameOrRoomIdToast = () =>
         toast({
