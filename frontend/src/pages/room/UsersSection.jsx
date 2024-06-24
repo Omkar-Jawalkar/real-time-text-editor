@@ -1,4 +1,4 @@
-import { Code, Flex, Button } from "@chakra-ui/react";
+import { Code, Text, Flex, Button } from "@chakra-ui/react";
 import User from "./User";
 // import { users } from "../../constants/users";
 import usersState from "../../atom/UsersState";
@@ -16,10 +16,8 @@ const UsersSection = () => {
     const navigate = useNavigate();
 
     return (
-        <Flex flexDirection={"column"} gap={4} flex={2} paddingTop={20}>
-            <Code colorScheme="purple" textAlign={"center"}>
-                Collaborators
-            </Code>
+        <Flex flexDirection={"column"} gap={2} flex={2} paddingTop={20}>
+            <Text>Collaborators:</Text>
             {users?.map((user) => (
                 <User key={user?.socketId} {...user} />
             ))}
@@ -31,6 +29,7 @@ const UsersSection = () => {
                     navigate("/");
                     location.reload();
                 }}
+                mt={4}
                 color={"purple"}
             >
                 Leave Room

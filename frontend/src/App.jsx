@@ -25,12 +25,6 @@ const App = () => {
     };
 
     useEffect(() => {
-        window.onbeforeunload = function () {
-            return "Are you sure? Your work will be lost. ";
-        };
-    }, []);
-
-    useEffect(() => {
         socket.on("connect", connectedToastMessage);
 
         socket.on("users-joins-or-leaves", (usersDataJoinedOrLeft) => {

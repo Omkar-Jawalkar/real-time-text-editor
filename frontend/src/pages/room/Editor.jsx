@@ -79,10 +79,11 @@ const Editor = () => {
                 editorRef.current
                     .getEditor()
                     .updateContents(editorContent, "api");
-
-                // todo:  For that specific cursor update the cursor
             });
         }
+        return () => {
+            socket.off("receive-editor-content", () => {});
+        };
     }, []);
 
     // recieve-cursor-changes
@@ -128,6 +129,9 @@ const Editor = () => {
                 }
             );
         }
+        return () => {
+            socket.off("recieve-editor-content-to-joined-user", () => {});
+        };
     }, []);
 
     useEffect(() => {
@@ -149,9 +153,15 @@ const Editor = () => {
                 }
             );
         }
+        return () => {
+            socket.off(
+                "make-emit-to-send-editor-content-to-joined-user",
+                () => {}
+            );
+        };
     }, []);
 
-    // todo: testing remaining 
+    // todo: testing remaining
     useEffect(() => {
         if (cursorsRef.current) {
             // if the user present then marking the hashMap[userSocket] to true;
