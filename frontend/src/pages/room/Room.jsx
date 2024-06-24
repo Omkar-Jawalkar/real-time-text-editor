@@ -12,12 +12,12 @@ const Room = () => {
     const { roomId } = useParams();
     const toast = useToast();
     const navigate = useNavigate();
-    const username = localStorage.getItem("username");
+    const username = sessionStorage.getItem("username");
     const [navigating] = useRecoilState(navigatingFromHomeState);
 
     const joinRoomAfterRefresh = () => {
-        let username = localStorage.getItem("username");
-        let color = localStorage.getItem("color");
+        let username = sessionStorage.getItem("username");
+        let color = sessionStorage.getItem("color");
 
         // if username is not present then redirect to login
         if (!username) {

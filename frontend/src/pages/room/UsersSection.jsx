@@ -27,7 +27,7 @@ const UsersSection = () => {
                 onClick={() => {
                     socket.emit("leave-room", socket.id, roomId);
                     setNavigateState(false);
-                    localStorage.clear();
+                    sessionStorage.clear();
                     navigate("/");
                     location.reload();
                 }}

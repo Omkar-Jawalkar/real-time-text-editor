@@ -58,8 +58,8 @@ const Home = () => {
         // storing username in localstoreage
         let randomValue = getRandomNumber(0, colors.length - 1);
         let randomColor = colors[randomValue];
-        localStorage.setItem("username", username);
-        localStorage.setItem("color", randomColor);
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("color", randomColor);
 
         if (!socket.connected) {
             toast({

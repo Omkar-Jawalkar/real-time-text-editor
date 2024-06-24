@@ -15,8 +15,8 @@ const Editor = () => {
     const cursorsRef = useRef(false);
     const [loading, setLoading] = useState(true);
     const [users] = useRecoilState(usersState);
-    const username = localStorage.getItem("username");
-    const color = localStorage.getItem("color");
+    const username = sessionStorage.getItem("username");
+    const color = sessionStorage.getItem("color");
     const { roomId } = useParams();
     const hashMapRef = useRef({});
 
