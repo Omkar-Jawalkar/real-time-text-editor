@@ -112,11 +112,11 @@ const Home = () => {
             borderRadius={"md"}
             borderColor={"gray"}
             flexDirection={"column"}
-            minW={"xl"}
+            minW={{ md: "xl" }}
         >
             <Heading textAlign={"center"} size={"md"}>
-                Welcome to{" "}
-                <Code fontSize={"lg"} color={"purple"}>
+                Welcome to
+                <Code ml={1} fontSize={"lg"} color={"purple.500"}>
                     Shareditor
                 </Code>
             </Heading>
@@ -145,10 +145,18 @@ const Home = () => {
             <Divider />
             <Text textAlign={"center"}>
                 Dont have a Room Id?{" "}
-                <Link onClick={generateRandomRoomId} color={"purple"}>
+                <Code
+                    cursor={"pointer"}
+                    bg={"white"}
+                    fontWeight={"bold"}
+                    onClick={generateRandomRoomId}
+                    color={"purple.500"}
+                    as={"u"}
+                    textUnderlineOffset={4}
+                >
                     {" "}
                     Create one{" "}
-                </Link>{" "}
+                </Code>{" "}
                 and join :)
             </Text>
         </Flex>

@@ -1,5 +1,6 @@
 import { Box, Flex, Link, Code } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "@chakra-ui/icons";
+import { Icon } from "@chakra-ui/react";
+import { FaGithub } from "react-icons/fa";
 const Navbar = () => {
     return (
         <Box bg="purple.500" px={4}>
@@ -11,11 +12,18 @@ const Navbar = () => {
                 justifyContent={"space-between"}
             >
                 <Box>
-                    <Link href="/" fontWeight="bold" color="white">
-                        Shareditor 🚀
-                    </Link>
+                    ⚡️
+                    <Code
+                        bg={"purple.500"}
+                        color={"white"}
+                        fontSize={"2xl"}
+                        href="/"
+                        fontWeight="bold"
+                    >
+                        Shareditor
+                    </Code>
                 </Box>
-                <Box>
+                <Box display={{ base: "none", sm: "flex" }}>
                     <Link href="/" fontWeight="bold" color="white">
                         <Code colorScheme="purple">
                             ⚡️ A Real Time Collaborative Text Editor ⚡️
@@ -37,7 +45,9 @@ const Navbar = () => {
                         href="https://github.com/Omkar-Jawalkar/real-time-text-editor"
                         color="white"
                     >
-                        Github
+                        <Code bg={"purple.500"} color={"white"}>
+                            Github
+                        </Code>
                     </Link>
                     <Link
                         isExternal
@@ -47,7 +57,7 @@ const Navbar = () => {
                         href="https://github.com/Omkar-Jawalkar/real-time-text-editor"
                         color="white"
                     >
-                        <ExternalLinkIcon />
+                        <Icon fontSize={"xl"} as={FaGithub} />
                     </Link>
                 </Flex>
             </Flex>

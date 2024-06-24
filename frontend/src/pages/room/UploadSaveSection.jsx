@@ -18,9 +18,21 @@ const UploadSaveSection = () => {
 
     return (
         <Flex py={2} justifyContent={"space-between"} alignItems={"center"}>
-            <Flex justifyContent={"center"} alignItems={"center"} gap={2}>
-                <Code color={"purple.500"} bg={"white"} fontSize={"md"}>
-                    Share Invitation code
+            <Flex
+                justifyContent={"center"}
+                gap={{ base: 1, sm: "2" }}
+                alignItems={"center"}
+            >
+                <Code
+                    as={"u"}
+                    textUnderlineOffset={5}
+                    color={"purple.500"}
+                    bg={"purple.100"}
+                    gap={2}
+                    fontWeight={"bold"}
+                    fontSize={{ base: "sm", sm: "md" }}
+                >
+                    Invitation Code
                 </Code>
                 <Tooltip label="Copy to clipboard" fontSize="sm">
                     <CopyIcon
@@ -33,7 +45,7 @@ const UploadSaveSection = () => {
                     />
                 </Tooltip>
             </Flex>
-            <Flex gap={4}>
+            <Flex gap={{ base: 2, sm: 4 }}>
                 <Button size={"sm"} variant={"outline"} colorScheme="purple">
                     Upload
                 </Button>

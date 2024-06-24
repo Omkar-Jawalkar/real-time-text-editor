@@ -5,7 +5,7 @@ const Footer = () => {
         <Flex
             justifyContent={"center"}
             alignItems={"center"}
-            maxW={"6xl"}
+            maxW={"full"}
             bg={"purple.500"}
             fontWeight={"bold"}
             color={"white"}
