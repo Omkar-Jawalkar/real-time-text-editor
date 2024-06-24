@@ -61,7 +61,14 @@ const Room = () => {
     }
 
     return (
-        <Flex w={"full"} mt={8} gap={6} minH={"inherit"}>
+        <Flex
+            flexDirection={{ base: "column", sm: "row" }}
+            w={"full"}
+            mt={{ base: 1, sm: 8 }}
+            gap={{ base: 1, sm: 6 }}
+            px={4}
+            minH={"inherit"}
+        >
             <EditorSection />
             <UsersSection />
         </Flex>
