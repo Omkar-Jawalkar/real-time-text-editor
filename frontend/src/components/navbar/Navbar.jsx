@@ -24,11 +24,9 @@ const Navbar = () => {
                     </Code>
                 </Box>
                 <Box display={{ base: "none", sm: "flex" }}>
-                    <Link href="/" fontWeight="bold" color="white">
-                        <Code colorScheme="purple">
-                            ⚡️ A Real Time Collaborative Text Editor ⚡️
-                        </Code>
-                    </Link>
+                    <Code fontWeight={"bold"} colorScheme="purple">
+                        ⚡️ A Real Time Collaborative Text Editor ⚡️
+                    </Code>
                 </Box>
 
                 <Flex
