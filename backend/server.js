@@ -101,12 +101,12 @@ io.on("connection", (socket) => {
                 users: roomData[roomId],
             });
 
-            if (isRefreshing) {
-                const room = roomData[roomId] || [];
-                if (room.length > 0) {
-                    sendEditorContentToSpecificSocket(room, socket.id);
-                }
+            // if (isRefreshing) {
+            const room = roomData[roomId] || [];
+            if (room.length > 0) {
+                sendEditorContentToSpecificSocket(room, socket.id);
             }
+            // }
             cb(false, "Joined the room");
         } catch (e) {
             cb(true, "Error Joining Room");
@@ -130,6 +130,10 @@ io.on("connection", (socket) => {
 
             // set newRoom to room
             roomData[roomId] = newRoom;
+
+            io.to(roomId).emit("users-joins-or-leaves", {
+                users: roomData[roomId],
+            });
         } catch (error) {
             console.log(error);
         }
