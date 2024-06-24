@@ -1,11 +1,11 @@
-import { Code, Text, Flex, Button } from "@chakra-ui/react";
+import { Button, Code, Flex } from "@chakra-ui/react";
 import User from "./User";
 // import { users } from "../../constants/users";
-import usersState from "../../atom/UsersState";
-import { useRecoilState } from "recoil";
 import { useNavigate, useParams } from "react-router-dom";
-import { socket } from "../../socket";
+import { useRecoilState } from "recoil";
 import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
+import usersState from "../../atom/UsersState";
+import { socket } from "../../socket";
 
 const UsersSection = () => {
     const [users] = useRecoilState(usersState);

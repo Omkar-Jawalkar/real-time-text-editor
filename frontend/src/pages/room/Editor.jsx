@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import { AbortedDeferredError, useParams } from "react-router-dom";
 import QuillCursors from "quill-cursors";
-import { Quill } from "react-quill";
-import { socket } from "../../socket";
-import usersState from "../../atom/UsersState";
+import { useEffect, useRef, useState } from "react";
+import ReactQuill, { Quill } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useParams } from "react-router-dom";
 import { useRecoilState } from "recoil";
+import usersState from "../../atom/UsersState";
+import { socket } from "../../socket";
 import "./cursor.css";
 
 Quill.register("modules/cursors", QuillCursors);

@@ -1,23 +1,22 @@
 import {
-    Text,
-    Flex,
-    Input,
-    Link,
     Button,
-    Heading,
-    Divider,
-    useToast,
     Code,
+    Divider,
+    Flex,
+    Heading,
+    Input,
+    Text,
+    useToast,
 } from "@chakra-ui/react";
-import { colors } from "../../constants/colors";
-import { useState, useEffect } from "react";
-import { socket } from "../../socket";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
-import FetchForNewUserJoinedState from "../../atom/FetchForNewUserJoinedState";
 import { useRecoilState } from "recoil";
 import { v4 as uuidv4 } from "uuid";
+import FetchForNewUserJoinedState from "../../atom/FetchForNewUserJoinedState";
+import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
+import { colors } from "../../constants/colors";
 import getRandomNumber from "../../constants/random";
+import { socket } from "../../socket";
 
 const Home = () => {
     const [roomId, setRoomId] = useState("");
