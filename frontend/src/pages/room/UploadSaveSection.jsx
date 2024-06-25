@@ -91,6 +91,7 @@ const UploadSaveSection = ({ editorRef }) => {
                     onClick={(event) => {
                         event.target.value = "";
                     }}
+                    accept=".json"
                     onChange={handleUpload}
                     ref={inputRef}
                     visibility={"hidden"}
