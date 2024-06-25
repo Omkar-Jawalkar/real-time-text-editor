@@ -7,11 +7,11 @@ import { useRecoilState } from "recoil";
 import usersState from "../../atom/UsersState";
 import { socket } from "../../socket";
 import "./cursor.css";
+import PropTypes from "prop-types";
 
 Quill.register("modules/cursors", QuillCursors);
 
-const Editor = () => {
-    const editorRef = useRef("");
+const Editor = ({ editorRef }) => {
     const cursorsRef = useRef(false);
     const [loading, setLoading] = useState(true);
     const [users] = useRecoilState(usersState);
@@ -206,4 +206,7 @@ const Editor = () => {
     );
 };
 
+Editor.propTypes = {
+    editorRef: PropTypes.any,
+};
 export default Editor;

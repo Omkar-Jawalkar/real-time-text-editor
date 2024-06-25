@@ -1,9 +1,13 @@
-import { Button, Flex, useToast, Code, Tooltip } from "@chakra-ui/react";
+import { Button, Flex, useToast, Code, Input, Tooltip } from "@chakra-ui/react";
 import { CopyIcon } from "@chakra-ui/icons";
+import { useRef } from "react";
 import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
+import { calcLength } from "framer-motion";
 
-const UploadSaveSection = () => {
+const UploadSaveSection = ({ editorRef }) => {
     const toast = useToast();
+    const inputRef = useRef(false);
     const { roomId } = useParams();
 
     const copySharingLinkToClipboard = () => {
@@ -14,6 +18,43 @@ const UploadSaveSection = () => {
             status: "success",
             isClosable: true,
         });
+    };
+
+    const JSONToFile = (obj, filename) => {
+        const blob = new Blob([JSON.stringify(obj, null, 2)], {
+            type: "application/json",
+        });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${filename}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+
+    const handleSave = () => {
+        if (editorRef.current) {
+            let delta = editorRef.current.getEditor().getContents();
+            JSONToFile(delta, `shareeditor-${roomId}`);
+        }
+    };
+
+    const handleUpload = (e) => {
+        console.log("UPLOADING");
+        if (inputRef.current) {
+            if (e.target.files.length > 0) {
+                let editor = editorRef.current.getEditor();
+                const fileReader = new FileReader();
+                let file = e.target.files[0];
+
+                fileReader.readAsText(file, "UTF-8");
+                fileReader.onload = (e) => {
+                    let obj = JSON.parse(e.target.result);
+
+                    editor.setContents(obj, "user");
+                };
+            }
+        }
     };
 
     return (
@@ -46,15 +87,40 @@ const UploadSaveSection = () => {
                 </Tooltip>
             </Flex>
             <Flex gap={{ base: 2, sm: 4 }}>
-                <Button size={"sm"} variant={"outline"} colorScheme="purple">
+                <Input
+                    onClick={(event) => {
+                        event.target.value = "";
+                    }}
+                    onChange={handleUpload}
+                    ref={inputRef}
+                    visibility={"hidden"}
+                    type="file"
+                />
+                <Button
+                    onClick={() => {
+                        inputRef.current.click();
+                    }}
+                    size={"sm"}
+                    variant={"outline"}
+                    colorScheme="purple"
+                >
                     Upload
                 </Button>
-                <Button size={"sm"} variant={"outline"} colorScheme="purple">
+                <Button
+                    onClick={handleSave}
+                    size={"sm"}
+                    variant={"outline"}
+                    colorScheme="purple"
+                >
                     Save
                 </Button>
             </Flex>
         </Flex>
     );
+};
+
+UploadSaveSection.propTypes = {
+    editorRef: PropTypes.any,
 };
 
 export default UploadSaveSection;

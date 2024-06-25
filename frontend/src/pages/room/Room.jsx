@@ -3,7 +3,7 @@ import EditorSection from "./EditorSection";
 import UsersSection from "./UsersSection";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { socket } from "../../socket";
 import navigatingFromHomeState from "../../atom/NavigatingFromHomeState";
 import { useRecoilState } from "recoil";
@@ -13,6 +13,7 @@ const Room = () => {
     const toast = useToast();
     const navigate = useNavigate();
     const username = sessionStorage.getItem("username");
+
     const [navigating] = useRecoilState(navigatingFromHomeState);
 
     const joinRoomAfterRefresh = () => {
