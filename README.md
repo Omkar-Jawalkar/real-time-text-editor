@@ -15,7 +15,9 @@ Shareditor is the ultimate real-time collaborative text editor that brings your 
 
 ## Example
 
-Video will come here
+https://github.com/Omkar-Jawalkar/real-time-text-editor/assets/82781128/402c2d9a-d870-472d-8ec5-a69fe0588bfb
+
+
 
 ## 🚀 Getting Started
 
