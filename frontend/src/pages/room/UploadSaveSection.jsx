@@ -105,7 +105,7 @@ const UploadSaveSection = ({ editorRef }) => {
                     variant={"outline"}
                     colorScheme="purple"
                 >
-                    Upload
+                    Import
                 </Button>
                 <Button
                     onClick={handleSave}
@@ -113,7 +113,7 @@ const UploadSaveSection = ({ editorRef }) => {
                     variant={"outline"}
                     colorScheme="purple"
                 >
-                    Save
+                    Export
                 </Button>
             </Flex>
         </Flex>
