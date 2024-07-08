@@ -1,11 +1,9 @@
+import bodyParser from "body-parser";
+import cors from "cors";
 import express from "express";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import homeRoutes from "./src/routes/home.routes.js";
-import cors from "cors";
-import bodyParser from "body-parser";
-import e from "express";
-import { error } from "node:console";
 
 const app = express();
 const server = createServer(app);
@@ -17,7 +15,11 @@ let roomData = {}; // roomId : [users]
 // IO server
 const io = new Server(server, {
     cors: {
-        origin: ["https://shareditor.vercel.app", "http://localhost:5173"],
+        origin: [
+            "https://shareditor.vercel.app",
+            "http://frontend:3000",
+            "http://localhost:3000",
+        ],
     },
 });
 

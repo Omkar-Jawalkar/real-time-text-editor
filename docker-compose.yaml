@@ -1,0 +1,22 @@
+version: "1.0.0"
+networks:
+    real-time-network:
+services:
+    backend:
+        container_name: backend
+        build: ./backend
+        image: "real-time-backend"
+        ports:
+            - "8080:8080"
+        networks:
+            - real-time-network
+    frontend:
+        container_name: frontend
+        build: ./frontend
+        image: "real-time-frontend"
+        ports:
+            - "3000:3000"
+        networks:
+            - real-time-network
+        depends_on:
+            - backend
