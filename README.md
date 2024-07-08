@@ -37,6 +37,14 @@ cd backend
 npm install
 ```
 
+or 
+
+**Docker**
+  > If you have docker installed then run this following command in root directory:
+```bash
+docker-compose up
+```
+
 3. Start the server:
 
 ```bash
