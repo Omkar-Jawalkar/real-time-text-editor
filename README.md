@@ -22,7 +22,7 @@ https://github.com/Omkar-Jawalkar/real-time-text-editor/assets/82781128/402c2d9a
 1. Clone the repository:
 
 ```bash
-https://github.com/Omkar-Jawalkar/real-time-text-editor.git
+git clone https://github.com/Omkar-Jawalkar/real-time-text-editor.git
 ```
 
 2. Install Dependencies:
